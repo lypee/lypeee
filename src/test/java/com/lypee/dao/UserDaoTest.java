@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserDaoTest extends BaseTest {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -34,5 +35,28 @@ public class UserDaoTest extends BaseTest {
         user.setSex("男");
         user.setRegisterTime(new Date());
         System.out.println(userDao.insert(user));
+    }
+    @Test
+    public void testActive()throws  Exception
+    {
+        User user = new User();
+        user.setId(5);
+       int i = userDao.getActiveNum(user);
+       i++ ;
+       user.setActive_number(i);
+       userDao.updateByPrimaryKeySelective(user);
+       System.out.println(userDao.getActiveNum(user));
+
+        AtomicInteger activeNum = new AtomicInteger();
+        activeNum.set(userDao.getActiveNum(user));
+        System.out.println("activeNum: "+activeNum.get());
+    }
+    @Test
+    public void logOut() throws  Exception
+    {
+        User user = new User() ;
+        user.setId(5);
+        user.setIsActive(0);
+        System.out.println(userDao.updateByPrimaryKeySelective(user));
     }
 }

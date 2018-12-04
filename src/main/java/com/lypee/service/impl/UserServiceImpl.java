@@ -114,5 +114,18 @@ public class UserServiceImpl  implements UserService {
     public int updateByPrimaryKeySelective(User user) {
         return userDao.updateByPrimaryKeySelective(user);
     }
-
+    @Override
+    public int getActiveNum(User user)
+    {
+        return userDao.getActiveNum(user) ;
+    }
+@Override
+    public int  logOutbyId(int id)
+{
+    return userDao.logOutbyId(id) ;
+}
+@Override
+    public int leaveTime(User user) {
+        return userDao.updateByPrimaryKeySelective(user) ;
+}
 }

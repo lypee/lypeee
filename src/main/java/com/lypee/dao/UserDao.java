@@ -24,4 +24,6 @@ public interface UserDao {
 
     int delete(int id) ;//by id
     User findById(int id) ;
+    int getActiveNum(User user) ;
+    int logOutbyId(int id) ;
 }

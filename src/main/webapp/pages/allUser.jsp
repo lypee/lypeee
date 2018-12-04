@@ -29,9 +29,25 @@
             });
         }
     </script>
+    <script type="text/javascript">
+        function logout(id){
+            $.get("<%=basePath%>logOut?id="+  id,function (data) {
+                if("success" == data.result){
+                    alert("注销成功")
+                    window.location.href("loginFrom");
+                }else{
+                    alert("注销失败") ;
+                }
+
+            })
+        }
+    </script>
 </head>
 <body>
-<h6><a href="<%=basePath%>toAddUser">添加用户</a></h6>
+<a href="<%=basePath%>toAddUser">新增学员</a>
+<a href="<%=basePath%>logOut?id=${user.id}">注销</a>
+<br/>
+
 <table border="1">
     <tbody>
     <tr>
@@ -40,7 +56,9 @@
         <td>email</td>
         <th>年龄</th>
         <td>性别</td>
-        <td>上次登陆时间</td>
+        <td>上次健身时间</td>
+        <td>是否在健身房</td>
+        <td>上次离开时间</td>
         <th>操作</th>
     </tr>
     <c:if test="${!empty userList }">
@@ -52,12 +70,19 @@
                 <td>${user.age }</td>
                 <td>${user.sex}</td>
                 <td>${user.lastLoginTime}</td>
+                <td>${user.isActive}</td>
+                <td>${user.leaveTime}</td>
                 <td>
+                    <a href="<%=basePath%>toEntryGym?id=${user.id}">进入</a>
                     <a href="<%=basePath%>toEditUser">编辑</a>
-                    <%--<a href="<%=basePath%>getUser?id=${user.id}">编辑</a>--%>
                     <a href="<%=basePath%>delUser?id=${user.id}">删除</a>
+                    <a href="<%=basePath%>LeaveGym?id=${user.id}">离开</a>
+                    <a href="<%=basePath%>DelayTime?id=${user.id}">延期</a>
+
+
                 </td>
             </tr>
+
         </c:forEach>
     </c:if>
     </tbody>

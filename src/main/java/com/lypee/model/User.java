@@ -11,10 +11,21 @@ public class User {
     private String sex ;
     private String remark ;
     private Date registerTime ;
+
+    public String getExpirationTime() {
+        return expirationTime;
+    }
+
+    public void setExpirationTime(String expirationTime) {
+        this.expirationTime = expirationTime;
+    }
+
+    private String expirationTime ;
+    private Date leaveTime ;
     private Date lastLoginTime ;
     private Integer isActive ;
-    private String activationCode ;
-    private String activationCodeTime ;
+    private Integer active_number ;
+
 
     public Integer getId() {
         return id;
@@ -80,6 +91,14 @@ public class User {
         this.registerTime = registerTime;
     }
 
+    public Date getLeaveTime() {
+        return leaveTime;
+    }
+
+    public void setLeaveTime(Date leaveTime) {
+        this.leaveTime = leaveTime;
+    }
+
     public Date getLastLoginTime() {
         return lastLoginTime;
     }
@@ -96,19 +115,11 @@ public class User {
         this.isActive = isActive;
     }
 
-    public String getActivationCode() {
-        return activationCode;
+    public Integer getActive_number() {
+        return active_number;
     }
 
-    public void setActivationCode(String activationCode) {
-        this.activationCode = activationCode;
-    }
-
-    public String getActivationCodeTime() {
-        return activationCodeTime;
-    }
-
-    public void setActivationCodeTime(String activationCodeTime) {
-        this.activationCodeTime = activationCodeTime;
+    public void setActive_number(Integer active_number) {
+        this.active_number = active_number;
     }
 }

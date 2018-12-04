@@ -10,10 +10,12 @@
         <result column="sex" jdbcType="VARCHAR" property="sex"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="register_time" jdbcType="TIMESTAMP" property="registerTime"/>
+        <result column="expiration_time" jdbcType="VARCHAR" property="expirationTime"/>
+        <result column="leave_time" jdbcType="TIMESTAMP" property="leaveTime"/>
         <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
-        <result column="is_active" jdbcType="INTEGER" property="activationCode"/>
-        <result column="activation_code" jdbcType="VARCHAR" property="activationCode"/>
-        <result column="activation_code_time" jdbcType="VARCHAR" property="activationCodeTime"/>
+        <result column="is_active" jdbcType="INTEGER" property="isActive"/>
+        <result column="active_number" jdbcType="INTEGER" property="active_number"/>
+        <!--<result column="activation_code_time" jdbcType="VARCHAR" property="activationCodeTime"/>-->
     </resultMap>
 
     <sql id="Example_Where_Clause">
@@ -77,16 +79,16 @@
     </sql>
     <sql id="BaseColumnList">
         id ,`name` , email ,`password` , age ,sex ,remark ,
-        register_time ,last_login_time  ,activation_code
+        register_time ,expiration_time ,leave_time ,last_login_time  ,active_number
     </sql>
+    <!--新增-->
     <insert id="insert" parameterType="com.lypee.model.User"
             useGeneratedKeys="true" keyProperty="id">
-        insert into `user` (id, `name`, email, password, age, sex, remark,
-                            register_time)
+        insert into `user` (id ,`name` ,email ,password ,age ,sex ,remark , registerTime, expiration_time)
         values
         (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
          #{password,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{sex,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
-         #{registerTime,jdbcType=TIMESTAMP}
+         #{registerTime,jdbcType=TIMESTAMP} ,#{expirationTime,jdbcType=VARCHAR}
          )
     </insert>
 
@@ -110,9 +112,9 @@
             <if test="remark != null" >remark = #{remark,jdbcType=VARCHAR},</if>
             <if test="registerTime != null" >register_time = #{registerTime,jdbcType=TIMESTAMP},</if>
             <if test="lastLoginTime != null" >last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},</if>
-            <if test="activationCode != null" >activation_code = #{activationCode,jdbcType=CHAR},</if>
+            <if test="active_number != null" >active_number = #{active_number,jdbcType=CHAR},</if>
             <if test="isActive != null" >is_active = #{isActive,jdbcType=INTEGER},</if>
-            <if test="activationCodeTime != null" >activation_code_time = #{activationCodeTime,jdbcType=INTEGER},</if>
+            <!--<if test="activationCodeTime != null" >activation_code_time = #{activationCodeTime,jdbcType=INTEGER},</if>-->
         </set>
           where id=#{id}
 
@@ -127,10 +129,12 @@
             <if test="sex != null" >sex = #{sex,jdbcType=VARCHAR},</if>
             <if test="remark != null" >remark = #{remark,jdbcType=VARCHAR},</if>
             <if test="registerTime != null" >register_time = #{registerTime,jdbcType=TIMESTAMP},</if>
+            <if test="expirationTime != null">expiration_time = #{expirationTime,jdbcType=VARCHAR},</if>
+            <if test="leaveTime != null ">leave_time = #{leaveTime ,jdbcType=TIMESTAMP},</if>
             <if test="lastLoginTime != null" >last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},</if>
-            <if test="activationCode != null" >activation_code = #{activationCode,jdbcType=CHAR},</if>
+            <if test="active_number != null" >active_number = #{active_number,jdbcType=CHAR},</if>
             <if test="isActive != null" >is_active = #{isActive,jdbcType=INTEGER},</if>
-            <if test="activationCodeTime != null" >activation_code_time = #{activationCodeTime,jdbcType=INTEGER},</if>
+            <!--<if test="activationCodeTime != null" >activation_code_time = #{activationCodeTime,jdbcType=INTEGER},</if>-->
         </set>
         where id= #{id ,jdbcType=INTEGER}
     </update>
@@ -143,4 +147,12 @@
     <select id="findById" parameterType="java.lang.Integer">
         select * from `user` where id=#{id}
     </select>
+    <!--获得该用户活跃的次数 并自增1-->
+    <select id="getActiveNum" resultType="java.lang.Integer" parameterType="com.lypee.model.User">
+        select active_number from `user` where id=#{id}
+    </select>
+    <update id="logOutById" parameterType="java.lang.Integer">
+        update `user` set is_active = 0 where id=#{id}
+    </update>
+
 </mapper>

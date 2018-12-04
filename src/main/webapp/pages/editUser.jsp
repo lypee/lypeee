@@ -15,7 +15,7 @@
 <html>
 <head>
     <base href="<%=basePath%>">
-    <title>编辑用户</title>
+    <title>编辑学员</title>
     <script type="text/javascript">
         function updateUser(){
             var form = document.forms[0];
@@ -32,7 +32,7 @@
 
     姓名：<input type="text" name="name" value="${user.name}"/>
     邮箱: <input type="text" name="email" value="${user.email}"/>
-    密码: <input type="text" name="password" value="${user.password}">
+    个人密码: <input type="text" name="password" value="${user.password}">
     年龄：<input type="int" name="age" value="${user.age}"/>
     性别: <input type="int" name="sex" value="${user.sex}">
 

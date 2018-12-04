@@ -26,7 +26,7 @@
     </script>
 </head>
 <body>
-<h1><%=path%>添加用户<%=basePath%></h1>
+<h1><%=path%>添加学员<%=basePath%></h1>
 <form action="" name="userForm">
     id: <input type="int" name="id"/>
     姓名：<input type="text" name="name"/><br/>

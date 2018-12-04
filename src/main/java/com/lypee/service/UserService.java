@@ -18,4 +18,7 @@ public interface UserService {
         int delete(int id) ;
         User findById(int id);
         int updateByPrimaryKeySelective(User user) ;
+        int getActiveNum(User user) ;
+        int  logOutbyId(int id);
+        int leaveTime(User user) ;
 }
