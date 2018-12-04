@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lypee.dao.ItemDao">
+    <resultMap id="BasrResultMap" type="com.lypee.model.Item">
+        <id column="id" property="id" jdbcType="INT"/>
+        <result  column="user_id" property="user_id" jdbcType="INT"/>
+        <result column="name" property="name" jdbcType="CHAR"/>
+        <result column="in_or_ex" property="in_or_ex" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="dele" property="dele"  jdbcType="INT"/>
+        <result column="sort" property="sort" jdbcType="INT" />
+    </resultMap>
+
+
+
+</mapper>
