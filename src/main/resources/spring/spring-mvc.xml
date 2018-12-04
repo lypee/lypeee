@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-4.0.xsd
+     http://www.springframework.org/schema/tx
+     http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+     http://www.springframework.org/schema/mvc
+     http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+    ">
+    <!--处理静态资源-->
+    <mvc:default-servlet-handler/>
+    <!--设置启用mvc注解 以及配置jar-->
+    <context:annotation-config/>
+    <context:component-scan base-package="com.lypee.controller"/>
+    <context:component-scan base-package="com.lypee.service"/>
+
+    <!--配置适配器-->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"
+          id="mappingHandlerAdapter"/>
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+
+    <!--配置视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          id="resourceViewResolver">
+        <!--<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
+        <property name="prefix" value="/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!--配置自动注册handler和adapter的驱动
+    -->
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager"/>
+    <bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean"
+          id="contentNegotiationManager">
+        <property name="favorPathExtension" value="false"/>
+    </bean>
+    <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"
+          id="jsonConverter"/>
+
+    <bean class="org.springframework.http.converter.StringHttpMessageConverter"
+          id="stringConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/plain;charset=utf-8</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <!--转换文件格式-->
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
+        <!--<property name="messageConverters">-->
+            <!--<list>-->
+                <!--<ref bean="stringConverter"/>-->
+                <!--<ref bean="jsonConverter"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--配置拦截器-->
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**/"/>-->
+            <!--<bean class="com.lypee.LoginInterceptor.LoginInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+
+</beans>

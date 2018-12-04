@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="testTables" targetRuntime="Mybatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="false"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/accountbook?useSSL=false"
+                        userId="root" password="123456"/>
+        <javaModelGenerator targetPackage="com.lypee.po"
+                            targetProject=".\src">
+            <property name="enableSubPackages" value="false"/>
+            <!--清理空格-->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.lypee.mapper2"
+                         targetProject=".\src">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator
+            type="XMLMAPPER"
+            targetPackage="com.lypee.mapper2"
+            targetProject=".\src">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+
+        <table tableName="user"/>
+    </context>
+</generatorConfiguration>

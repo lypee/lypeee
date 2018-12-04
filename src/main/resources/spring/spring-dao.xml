@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+   http://www.springframework.org/schema/tx
+   http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+    <!--开启事务管理-->
+    <!--<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager"-->
+    <!--id="transactionManager"/>-->
+    <!--&lt;!&ndash;配置事务管理器&ndash;&gt;-->
+    <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
+
+    <!--自己使用SqlsessionFactory-->
+    <!--配置c3p0-->
+
+    <context:property-placeholder location="classpath:mysqldb.properties"/>
+    <bean class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          id="dataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/accountbook?useSSL=false"/>
+        <property name="user" value="root"/>
+        <property name="password" value="123456"/>
+        <property name="maxPoolSize" value="30"/>
+        <property name="minPoolSize" value="10"/>
+        <property name="autoCommitOnClose" value="false"/>
+        <property name="checkoutTimeout" value="10000"/>
+        <property name="acquireRetryAttempts" value="2"/>
+    </bean>
+
+    <!--配置mybatis-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--注入数据库链接池-->
+        <!--将配置注入的数据库连接池-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--配置mybatis配置文件-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--配置使用别名的包-->
+        <property name="typeAliasesPackage" value="com.lypee.model"/>
+        <!--配置扫描的mapper文件-->
+        <property name="mapperLocations" value="classpath*:mapper/BalanceMapper.xml"/>
+    </bean>
+    <!--mapper的接口-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!--扫描接口类-->
+        <property name="basePackage" value="com.lypee.dao"/>
+    </bean>
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!---->
+    <!--dataBaseSources-->
+    <!--<bean class="com.alibaba.druid.pool.DruidDataSource"-->
+    <!--id="dataSource">-->
+    <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
+    <!--<property name="url" value="jdbc:mysq://localhost:3306/accountbook?useSSL=false"/>-->
+    <!--<property name="username" value="root"/>-->
+    <!--<property name="password" value="123456"/>-->
+    <!--<property name="initialSize" value="1"/>-->
+    <!--<property name="minIdle" value="1"/>-->
+    <!--<property name="maxActive" value="20"/>-->
+    <!--<property name="maxWait" value="60000"/>-->
+    <!--&lt;!&ndash;超时时间是否回收-->
+    <!--超时时间限制-->
+    <!--配置间隔检测时间 毫秒-->
+    <!--连接池最小生存孔吉纳-->
+    <!--检测是否是有效的sql语句-->
+    <!--申请链接的时候检测-->
+    <!--申请以及归还时检测validationQuery是否有效 true降低新能-->
+    <!--&ndash;&gt;-->
+    <!--<property name="removeAbandonedTimeout" value="180"/>-->
+    <!--<property name="removeAbandonedTimeoutMillis" value="180"/>-->
+    <!--<property name="timeBetweenEvictionRunsMillis" value="60000"/>-->
+    <!--<property name="minEvictableIdleTimeMillis" value="3000000"/>-->
+    <!--<property name="validationQuery" value="SELECT 1"/>-->
+    <!--<property name="testWhileIdle" value="true"/>-->
+    <!--<property name="testOnBorrow" value="false"/>-->
+    <!--<property name="testOnReturn" value="false"/>-->
+    <!--</bean>-->
+</beans>
